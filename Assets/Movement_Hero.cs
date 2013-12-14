@@ -10,16 +10,18 @@ public class Movement_Hero : MonoBehaviour
 	private int JumpStepHeightMax = 16;
 	private int JumpIntervalMultiplicator = 2;
 	private bool Grounded = false;
+	private bool Alive = true;
 	// Use this for initialization
 	void Start ()
 	{
 	}
 	void Update ()
 	{
-		if (DaOneIsPerformed && Grounded)
+		if (DaOneIsPerformed)
 		{
 			if (Input.GetKeyDown (KeyCode.Space))
 			{
+				Debug.Log("UPDATE: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
 				DaOneIsPerformed = false;
 			}
 		}
@@ -27,17 +29,23 @@ public class Movement_Hero : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (!DaOneIsPerformed)
+		if (Alive)
 		{
-			StartCoroutine (PerformJump());
-			DaOneIsPerformed = true;
+			if (!DaOneIsPerformed)
+			{
+				Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+				if (Grounded)
+				{
+					StartCoroutine (PerformJump());
+				}
+				DaOneIsPerformed = true;
+			}
+			transform.Translate (MovementSpeed, 0, 0);
+			PerformGravity ();
 		}
-		transform.Translate (MovementSpeed, 0, 0);
-		PerformGravity ();
 	}
 	IEnumerator PerformJump ()
 	{
-		Grounded = false;
 		int CurrentJumpInterval = JumpStepHeightMax;
 		while (CurrentJumpInterval > 0)
 		{
@@ -51,11 +59,13 @@ public class Movement_Hero : MonoBehaviour
 	private int CurrentGravity = 0;
 	void PerformGravity ()
 	{
-		RayCheckStartPoints [0] = new Vector2 (transform.position.x , transform.position.y);
-		RayCheckStartPoints [1] = new Vector2 (transform.position.x + 16, transform.position.y);
+		RayCheckStartPoints = new Vector2[1];
+		RayCheckStartPoints [0] = new Vector2 (transform.position.x + 8, transform.position.y);
+		//RayCheckStartPoints [1] = new Vector2 (transform.position.x + 16, transform.position.y);
 		int PerformDistance = Mathf.Abs(CurrentGravity);
 		for (int i = 0; i < RayCheckStartPoints.Length; i++)
 		{
+			Debug.DrawLine(RayCheckStartPoints[i], new Vector3(RayCheckStartPoints[i].x, 0, 0));
 			RayCastHit = Physics2D.Raycast(RayCheckStartPoints[i], new Vector2(0, -1), Mathf.Abs(CurrentGravity), 1 <<31);
 			if (RayCastHit)
 			{
@@ -67,16 +77,29 @@ public class Movement_Hero : MonoBehaviour
 				}
 				else
 				{
-					if (PerformDistance > Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y) - RayCastHit.point.y))
-					{
-						PerformDistance = Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y) - RayCastHit.point.y);
-					}
+					PerformDistance = Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y - RayCastHit.point.y));
+					transform.Translate(0, -PerformDistance, 0);
+					Grounded = true;
+					return;
 				}
 			}
 		}
 		Grounded = false;
 		transform.Translate(0, -PerformDistance, 0);
 		CurrentGravity += GravitySpeed;
-		Debug.Log (PerformDistance);
+	}
+	void OnTriggerEnter2D (Collider2D col)
+	{
+		if (col.gameObject.layer == 31)
+		{
+			if (!Grounded)
+			{
+				Die();
+			}
+		}
+	}
+	void Die()
+	{
+		Alive = false;
 	}
 }
