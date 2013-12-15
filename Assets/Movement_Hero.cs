@@ -5,15 +5,19 @@ public class Movement_Hero : MonoBehaviour
 {
 	private Vector2[] RayCheckStartPoints = new Vector2[2];
 	private bool DaOneIsPerformed = true;
-	private int MovementSpeed = 5;
+	private int MovementSpeed = 3;
 	private int GravitySpeed = -1;
 	private int JumpStepHeightMax = 16;
 	private int JumpIntervalMultiplicator = 2;
 	private bool Grounded = false;
 	private bool Alive = true;
+
+	private Ground_Manager MyGroundManager;
+	private GameObject CurrentGround;
 	// Use this for initialization
 	void Start ()
 	{
+		MyGroundManager = GameObject.Find ("Ground_Manager").GetComponent<Ground_Manager>();
 	}
 	void Update ()
 	{
@@ -92,6 +96,11 @@ public class Movement_Hero : MonoBehaviour
 	{
 		if (col.gameObject.layer == 31)
 		{
+			if (CurrentGround != col.gameObject)
+			{
+				MyGroundManager.OrderNextGround();
+				CurrentGround = col.gameObject;
+			}
 			if (!Grounded)
 			{
 				Die();
