@@ -20,10 +20,17 @@ public class Movement_Hero : MonoBehaviour
 
     private Ground_Manager MyGroundManager;
     private GameObject CurrentGround;
-    // Use this for initialization
+
+	private int animationTilesAmount = 6;
+	private int currentAnimationFrame = 0;
+	private GameObject heroModel;
+	private int animationSpeed = 3;
+	// Use this for initialization
     void Start()
     {
         MyGroundManager = GameObject.Find("GameManager").GetComponent<Ground_Manager>();
+		heroModel = GameObject.Find("Hero").transform.FindChild("Model").gameObject;
+		heroModel.renderer.material.mainTextureScale = new Vector2(1f / animationTilesAmount, 1);
     }
     void Update()
     {
@@ -63,6 +70,20 @@ public class Movement_Hero : MonoBehaviour
                 }
             }
             PerformGravity();
+			//RunAnimation
+			if (Grounded)
+			{
+				if (currentAnimationFrame % animationSpeed == 0)
+				{
+					heroModel.renderer.material.mainTextureOffset = new Vector2(1f / animationTilesAmount * currentAnimationFrame / animationSpeed, 0);
+				}
+
+				if (currentAnimationFrame == 6 * animationSpeed)
+				{
+					currentAnimationFrame = 0;
+				}
+				currentAnimationFrame++;
+			}
         }
     }
     IEnumerator PerformJump()
