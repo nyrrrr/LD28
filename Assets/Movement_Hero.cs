@@ -29,6 +29,8 @@ public class Movement_Hero : MonoBehaviour
     void Start()
     {
         MyGroundManager = GameObject.Find("GameManager").GetComponent<Ground_Manager>();
+		MyGroundManager.OrderNextGround();
+		MyGroundManager.OrderNextGround();
 		heroModel = GameObject.Find("Hero").transform.FindChild("Model").gameObject;
 		heroModel.renderer.material.mainTextureScale = new Vector2(1f / animationTilesAmount, 1);
     }
