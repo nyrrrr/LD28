@@ -11,6 +11,7 @@ public class Movement_Hero : MonoBehaviour
 	private int JumpIntervalMultiplicator = 2;
 	public bool Grounded = false;
 	private bool Alive = true;
+    private bool keyPressed = false;
 
 	private Ground_Manager MyGroundManager;
 	private GameObject CurrentGround;
@@ -21,14 +22,21 @@ public class Movement_Hero : MonoBehaviour
 	}
 	void Update ()
 	{
+        keyPressed = Input.GetKeyDown(KeyCode.Space);
 		if (DaOneIsPerformed)
 		{
-			if (Input.GetKeyDown (KeyCode.Space))
+            if (keyPressed)
 			{
-				Debug.Log("UPDATE: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+				//Debug.Log("UPDATE: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
 				DaOneIsPerformed = false;
 			}
 		}
+        if (!Alive) {
+            if (keyPressed)
+            {
+                Application.LoadLevel(0);  
+            }
+        }
 	}
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -37,7 +45,7 @@ public class Movement_Hero : MonoBehaviour
 		{
 			if (!DaOneIsPerformed)
 			{
-				Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+				//Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
 				if (Grounded)
 				{
 					StartCoroutine (PerformJump());
