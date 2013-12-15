@@ -19,6 +19,9 @@ public class Ground_Manager : MonoBehaviour
 	private int MinimumSpaceBetweenGrounds = 16;
 	private int MaximumSpaceBetweenGrounds = 24;
 
+	private int MinimumGroundWith = 160;
+	private int MaximumGroundWith = 240;
+
 	private int BlockSize = 16;
 	private int MovementSpeed;
 
@@ -27,7 +30,7 @@ public class Ground_Manager : MonoBehaviour
 		while (true)
 		{
 			OrderNextGround();
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(1f);
 		}
 	}
 	int CurrentGround = 0;
@@ -42,10 +45,24 @@ public class Ground_Manager : MonoBehaviour
 		{
 			NextGround = CurrentGround + 1;
 		}
+		int groundWidth = MinimumGroundWith + Random.Range (0, (MaximumGroundWith - MinimumGroundWith) / 16 + 1) * 16;
+		MyGrounds [NextGround].transform.FindChild ("CornerTopRight").transform.localPosition 	= new Vector3 (groundWidth - BlockSize / 2, MyGrounds [NextGround].transform.FindChild ("CornerTopRight").transform.localPosition.y, 0);
+		MyGrounds [NextGround].transform.FindChild ("SideRight").transform.localPosition 		= new Vector3 (groundWidth - BlockSize / 2, MyGrounds [NextGround].transform.FindChild ("SideRight").transform.localPosition.y, 0);
+
+		MyGrounds [NextGround].transform.FindChild ("InnerCore").transform.localPosition 		= new Vector3 (groundWidth / 2, MyGrounds [NextGround].transform.FindChild ("InnerCore").transform.localPosition.y, 0);
+		MyGrounds [NextGround].transform.FindChild ("InnerCore").transform.localScale 			= new Vector3 (16 * (groundWidth / 16 - 2), MyGrounds [NextGround].transform.FindChild ("InnerCore").transform.localScale.y, 1);
+		MyGrounds [NextGround].transform.FindChild ("InnerCore").renderer.material.mainTextureScale	= new Vector2 ((groundWidth / 16 - 2), MyGrounds [NextGround].transform.FindChild ("InnerCore").renderer.material.mainTextureScale.y);
+
+		MyGrounds [NextGround].transform.FindChild ("TopGround").transform.localPosition 		= new Vector3 (groundWidth / 2, MyGrounds [NextGround].transform.FindChild ("TopGround").transform.localPosition.y, 0);
+		MyGrounds [NextGround].transform.FindChild ("TopGround").transform.localScale 			= new Vector3 (16 * (groundWidth / 16 - 2), MyGrounds [NextGround].transform.FindChild ("TopGround").transform.localScale.y, 1);
+		MyGrounds [NextGround].transform.FindChild ("TopGround").renderer.material.mainTextureScale	= new Vector2 ((groundWidth / 16 - 2), MyGrounds [NextGround].transform.FindChild ("TopGround").renderer.material.mainTextureScale.y);
+
+		MyGrounds [NextGround].GetComponent<BoxCollider2D> ().size 		= new Vector2 (groundWidth, MyGrounds [NextGround].GetComponent<BoxCollider2D> ().size.y);
+		MyGrounds [NextGround].GetComponent<BoxCollider2D> ().center 	= new Vector2 (groundWidth / 2, MyGrounds [NextGround].GetComponent<BoxCollider2D> ().center.y);
 
 		MyGrounds [NextGround].transform.position = 
 			new Vector3 (
-				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.lossyScale.x / 2 + MyGrounds [NextGround].transform.lossyScale.x / 2 + Random.Range (MinimumSpaceBetweenGrounds, MaximumSpaceBetweenGrounds),
+				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.Find("InnerCore").transform.localPosition.x * 2+ Random.Range (MinimumSpaceBetweenGrounds, MaximumSpaceBetweenGrounds),
 				MyGrounds [CurrentGround].transform.position.y + BlockSize * Random.Range (-2, 2),
 				0);
 		if (CurrentGround == MyGrounds.Length - 1)
