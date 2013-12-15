@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
                                 , 1.0F);
 
             GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 - 250, 800, 500), "<color=red><size=100>YOU LOST!</size></color>", centeredStyle);
-            GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 - 92, 800, 500), "<color=red><size=35>ran " + highscore + "m before you</size></color>", centeredStyle);
-            GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 120, 800, 500), "<color=white><size=15>Press SPACE to play again</size></color>", centeredStyle);
+            GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 - 52, 800, 500), "<color=red><size=35>ran " + highscore + "m before you</size></color>", centeredStyle);
+            GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 200, 800, 500), "<color=white><size=15>Press SPACE to play again</size></color>", centeredStyle);
 
 
         }
