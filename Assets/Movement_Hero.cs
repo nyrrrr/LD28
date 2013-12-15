@@ -5,11 +5,11 @@ public class Movement_Hero : MonoBehaviour
 {
 	private Vector2[] RayCheckStartPoints = new Vector2[2];
 	private bool DaOneIsPerformed = true;
-	private int MovementSpeed = 4;
+	private int MovementSpeed = 5;
 	private int GravitySpeed = -1;
 	private int JumpStepHeightMax = 24;
 	private int JumpIntervalMultiplicator = 2;
-	private bool Grounded = false;
+	public bool Grounded = false;
 	private bool Alive = true;
 
 	private Ground_Manager MyGroundManager;
@@ -44,7 +44,10 @@ public class Movement_Hero : MonoBehaviour
 				}
 				DaOneIsPerformed = true;
 			}
-			transform.Translate (MovementSpeed, 0, 0);
+			for (int i = 0; i < MovementSpeed; i++)
+			{
+				transform.Translate (1, 0, 0);
+			}
 			PerformGravity ();
 		}
 	}
@@ -60,7 +63,7 @@ public class Movement_Hero : MonoBehaviour
 	}
 	private Vector2 MaxMoveMovementDistance;
 	private RaycastHit2D RayCastHit;
-	private int CurrentGravity = 0;
+	private int CurrentGravity = 1;
 	void PerformGravity ()
 	{
 		RayCheckStartPoints = new Vector2[2];
@@ -75,7 +78,13 @@ public class Movement_Hero : MonoBehaviour
 			{
 				if (Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y - RayCastHit.point.y)) == 0)
 				{
-					CurrentGravity = 0;
+					if (transform.position.y < RayCastHit.collider.transform.position.y)
+					{
+						Debug.Log("DEAD MOFO");
+						Die();
+						return;
+					}
+					CurrentGravity = 1;
 					Grounded = true;
 					return;
 				}
@@ -94,6 +103,7 @@ public class Movement_Hero : MonoBehaviour
 	}
 	void OnTriggerEnter2D (Collider2D col)
 	{
+		Debug.Log("Triggered!: " + Grounded);
 		if (col.gameObject.layer == 31)
 		{
 			if (CurrentGround != col.gameObject)

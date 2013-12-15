@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Texture_Import_Settings.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Ground_Manager.cs">
     <Files>
-      <File FileName="Assets\Texture_Import_Settings.cs" Line="31" Column="2" />
+      <File FileName="Assets\Texture_Import_Settings.cs" Line="21" Column="7" />
+      <File FileName="Assets\Ground_Manager.cs" Line="30" Column="14" />
+      <File FileName="Assets\Movement_Hero.cs" Line="69" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

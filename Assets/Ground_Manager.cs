@@ -16,7 +16,7 @@ public class Ground_Manager : MonoBehaviour
 
 	public GameObject[] MyGrounds;
 
-	private int MinimumSpaceBetweenGrounds = 20;
+	private int MinimumSpaceBetweenGrounds = 22;
 	private int MaximumSpaceBetweenGrounds = 32;
 
 	private int MinimumGroundWith = 160;
@@ -69,7 +69,7 @@ public class Ground_Manager : MonoBehaviour
 
 		MyGrounds [NextGround].transform.position = 
 			new Vector3 (
-				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.Find("InnerCore").transform.localPosition.x * 2+ Random.Range (MinimumSpaceBetweenGrounds, MaximumSpaceBetweenGrounds),
+				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.Find("InnerCore").transform.localPosition.x * 2 + Random.Range (MinimumSpaceBetweenGrounds, MaximumSpaceBetweenGrounds),
 				MyGrounds [CurrentGround].transform.position.y + BlockSize * RandomInt,
 				0);
 		if (CurrentGround == MyGrounds.Length - 1)
