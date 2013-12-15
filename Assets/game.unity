@@ -1656,7 +1656,7 @@ MonoBehaviour:
   showHighscore: 0
   enableRestart: 0
   highscore: 0
-  font: {fileID: 12800000, guid: f663fb9fa2da7d844bc89a8fde8858aa, type: 3}
+  font: {fileID: 12800000, guid: 6a3600ae1b23fb54785335174ce823fe, type: 3}
 --- !u!1 &935782008
 GameObject:
   m_ObjectHideFlags: 0

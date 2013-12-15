@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Screen.height);
         if (!alive)
         {
             showHighscore = true;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine("_HandleRestart");
             if (Input.GetKeyDown(KeyCode.Space) && enableRestart)
             {
-                Application.LoadLevel(0);
+                Application.LoadLevel(1);
             }
         }
     }
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
             centeredStyle.alignment = TextAnchor.UpperCenter;
             centeredStyle.font = font;
 
-           centeredStyle.fontSize = 12;
+            centeredStyle.fontSize = 12;
 
             _tex2d = new Texture2D(1, 1);
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height)
