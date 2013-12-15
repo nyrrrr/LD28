@@ -16,8 +16,8 @@ public class Ground_Manager : MonoBehaviour
 
 	public GameObject[] MyGrounds;
 
-	private int MinimumSpaceBetweenGrounds = 16;
-	private int MaximumSpaceBetweenGrounds = 24;
+	private int MinimumSpaceBetweenGrounds = 20;
+	private int MaximumSpaceBetweenGrounds = 32;
 
 	private int MinimumGroundWith = 160;
 	private int MaximumGroundWith = 240;

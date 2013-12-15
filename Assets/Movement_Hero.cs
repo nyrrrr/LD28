@@ -5,9 +5,9 @@ public class Movement_Hero : MonoBehaviour
 {
 	private Vector2[] RayCheckStartPoints = new Vector2[2];
 	private bool DaOneIsPerformed = true;
-	private int MovementSpeed = 3;
+	private int MovementSpeed = 4;
 	private int GravitySpeed = -1;
-	private int JumpStepHeightMax = 16;
+	private int JumpStepHeightMax = 24;
 	private int JumpIntervalMultiplicator = 2;
 	private bool Grounded = false;
 	private bool Alive = true;
@@ -63,17 +63,17 @@ public class Movement_Hero : MonoBehaviour
 	private int CurrentGravity = 0;
 	void PerformGravity ()
 	{
-		RayCheckStartPoints = new Vector2[1];
-		RayCheckStartPoints [0] = new Vector2 (transform.position.x + 8, transform.position.y);
-		//RayCheckStartPoints [1] = new Vector2 (transform.position.x + 16, transform.position.y);
+		RayCheckStartPoints = new Vector2[2];
+		RayCheckStartPoints [0] = new Vector2 (transform.position.x + 0, transform.position.y);
+		RayCheckStartPoints [1] = new Vector2 (transform.position.x + 16, transform.position.y);
 		int PerformDistance = Mathf.Abs(CurrentGravity);
 		for (int i = 0; i < RayCheckStartPoints.Length; i++)
 		{
-			Debug.DrawLine(RayCheckStartPoints[i], new Vector3(RayCheckStartPoints[i].x, 0, 0));
+			//Debug.DrawLine(RayCheckStartPoints[i], new Vector3(RayCheckStartPoints[i].x, 0, 0));
 			RayCastHit = Physics2D.Raycast(RayCheckStartPoints[i], new Vector2(0, -1), Mathf.Abs(CurrentGravity), 1 <<31);
 			if (RayCastHit)
 			{
-				if (Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y) - RayCastHit.point.y) == 0)
+				if (Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y - RayCastHit.point.y)) == 0)
 				{
 					CurrentGravity = 0;
 					Grounded = true;
