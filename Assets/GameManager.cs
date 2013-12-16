@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     IEnumerator _HandleRestart()
     {
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
 
         enableRestart = true;
 
@@ -51,14 +51,15 @@ public class GameManager : MonoBehaviour
 
     void OnGUI()
     {
+        centeredStyle = GUI.skin.GetStyle("Label");
+        centeredStyle.alignment = TextAnchor.UpperCenter;
+        centeredStyle.font = font;
+
+        centeredStyle.fontSize = 12;
+
         if (showHighscore)
         {
-
-            centeredStyle = GUI.skin.GetStyle("Label");
             centeredStyle.alignment = TextAnchor.UpperCenter;
-            centeredStyle.font = font;
-
-            centeredStyle.fontSize = 12;
 
             _tex2d = new Texture2D(1, 1);
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height)
@@ -71,7 +72,11 @@ public class GameManager : MonoBehaviour
             GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 - 52, 800, 500), "<color=red><size=35>ran " + highscore + "m before you</size></color>", centeredStyle);
             GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 200, 800, 500), "<color=white><size=15>Press SPACE to play again</size></color>", centeredStyle);
 
-
+        }
+        else
+        {
+            centeredStyle.alignment = TextAnchor.UpperRight;
+            GUI.Label(new Rect((Screen.width) - 210, 0, 200, 100), "<color=white>" + (int)highscore + "m</color>", centeredStyle);
         }
     }
 

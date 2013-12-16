@@ -25,6 +25,7 @@ public class Movement_Hero : MonoBehaviour
 	private int currentAnimationFrame = 0;
 	private GameObject heroModel;
 	private int animationSpeed = 3;
+    public AudioClip jumpSound, deathSound;
 	// Use this for initialization
     void Start()
     {
@@ -89,6 +90,7 @@ public class Movement_Hero : MonoBehaviour
     }
     IEnumerator PerformJump()
     {
+        audio.PlayOneShot(jumpSound);
         int CurrentJumpInterval = JumpStepHeightMax;
         while (CurrentJumpInterval > 0)
         {
@@ -155,6 +157,7 @@ public class Movement_Hero : MonoBehaviour
     }
     void Die()
     {
+        audio.PlayOneShot(deathSound);
         GameManager.Alive = false;
     }
 }
