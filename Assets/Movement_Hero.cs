@@ -52,6 +52,7 @@ public class Movement_Hero : MonoBehaviour
     {
         if (GameManager.Alive)
         {
+
             if (!DaOneIsPerformed)
             {
                 //Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
@@ -70,6 +71,13 @@ public class Movement_Hero : MonoBehaviour
                 {
                     stepCounter = 0;
                     GameManager.Highscore += 0.5;
+                    if (GameManager.Highscore % 100 == 0)
+                    {
+                        Ground_Manager.MinimumSpaceBetweenGrounds++;
+                        Ground_Manager.MaximumSpaceBetweenGrounds++;
+                        MovementSpeed++;
+                        
+                    }
                 }
             }
             PerformGravity();
@@ -88,6 +96,8 @@ public class Movement_Hero : MonoBehaviour
 			}
         }
     }
+
+
     IEnumerator PerformJump()
     {
         audio.PlayOneShot(jumpSound);

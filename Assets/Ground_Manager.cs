@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Ground_Manager : MonoBehaviour
 {
+
+    private static Ground_Manager _selfRef;
+    void Awake() {
+        _selfRef = this;
+    }
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -16,8 +22,21 @@ public class Ground_Manager : MonoBehaviour
 
 	public GameObject[] MyGrounds;
 
-	private int MinimumSpaceBetweenGrounds = 50;
-	private int MaximumSpaceBetweenGrounds = 70;
+    private int minimumSpaceBetweenGrounds = 50;
+
+    public static int MinimumSpaceBetweenGrounds
+    {
+        get { return _selfRef.minimumSpaceBetweenGrounds; }
+        set { _selfRef.minimumSpaceBetweenGrounds = value; }
+    }
+	private int maximumSpaceBetweenGrounds = 70;
+    public static int MaximumSpaceBetweenGrounds
+    {
+        get { return _selfRef.maximumSpaceBetweenGrounds; }
+        set { _selfRef.maximumSpaceBetweenGrounds = value; }
+    }
+
+
 
 	private int MinimumGroundWith = 48;
 	private int MaximumGroundWith = 240;
@@ -69,7 +88,7 @@ public class Ground_Manager : MonoBehaviour
 
 		MyGrounds [NextGround].transform.position = 
 			new Vector3 (
-				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.Find("InnerCore").transform.localPosition.x * 2 + Random.Range (MinimumSpaceBetweenGrounds, MaximumSpaceBetweenGrounds),
+				MyGrounds [CurrentGround].transform.position.x + MyGrounds [CurrentGround].transform.Find("InnerCore").transform.localPosition.x * 2 + Random.Range (minimumSpaceBetweenGrounds, maximumSpaceBetweenGrounds),
 				MyGrounds [CurrentGround].transform.position.y + BlockSize * RandomInt,
 				0);
 		if (CurrentGround == MyGrounds.Length - 1)
