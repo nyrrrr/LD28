@@ -85,7 +85,6 @@ public class Movement_Hero : MonoBehaviour
 
                 if (updateCounter > 250)
                 {
-                    Debug.Log(updateCounter);
                     updateCounter = 0;
                     Time.timeScale += 0.1f;
                 }

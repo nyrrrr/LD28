@@ -10,7 +10,6 @@ public class CameraMovement : MonoBehaviour {
 
     void Awake() {
         hero = GameObject.Find("Hero").transform;
-        Debug.Log(hero);
     }
 
 	// Use this for initialization
