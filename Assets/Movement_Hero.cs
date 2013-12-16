@@ -126,7 +126,7 @@ public class Movement_Hero : MonoBehaviour
         RayCheckStartPoints = new Vector2[2];
         // edit nyrrrr: this might be wrong (TODO ?)
         RayCheckStartPoints[0] = new Vector2(transform.position.x-3, transform.position.y);
-        RayCheckStartPoints[1] = new Vector2(transform.position.x-3 + ((BoxCollider2D)transform.collider2D).size.x, transform.position.y);
+        RayCheckStartPoints[1] = new Vector2(transform.position.x+1 + ((BoxCollider2D)transform.collider2D).size.x, transform.position.y);
         int PerformDistance = Mathf.Abs(CurrentGravity);
         for (int i = 0; i < RayCheckStartPoints.Length; i++)
         {

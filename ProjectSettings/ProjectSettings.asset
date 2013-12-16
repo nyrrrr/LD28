@@ -14,10 +14,10 @@ PlayerSettings:
   productName: YOGOB
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  defaultScreenWidth: 640
-  defaultScreenHeight: 480
-  defaultScreenWidthWeb: 640
-  defaultScreenHeightWeb: 480
+  defaultScreenWidth: 1280
+  defaultScreenHeight: 720
+  defaultScreenWidthWeb: 1280
+  defaultScreenHeightWeb: 720
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   m_ActiveColorSpace: 0
@@ -169,6 +169,7 @@ PlayerSettings:
   spritePackerPolicy: 
   scriptingDefineSymbols:
     1: 
+    2: 
   metroPackageName: LD28
   metroPackageLogo: 
   metroPackageVersion: 

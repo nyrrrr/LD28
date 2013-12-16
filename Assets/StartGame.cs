@@ -38,5 +38,6 @@ public class StartGame : MonoBehaviour
         GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 40, 800, 500), "<color=white><size=10>a game made for #LD28 by</size></color>", centeredStyle);
         GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 60, 800, 500), "<color=white><size=10>Zerano & nyrrrr</size></color>", centeredStyle);
 
+        GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 110, 800, 500), "<color=white><size=10>Music by: Tommy Bulpa</size></color>", centeredStyle);
     }
 }
