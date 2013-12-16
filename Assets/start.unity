@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   font: {fileID: 12800000, guid: 6a3600ae1b23fb54785335174ce823fe, type: 3}
-  selectSound: {fileID: 8300000, guid: 54e0a7084308a704ca2bfdfe5be0ece1, type: 3}
 --- !u!82 &698818879
 AudioSource:
   m_ObjectHideFlags: 0
