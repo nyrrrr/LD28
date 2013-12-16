@@ -147,6 +147,7 @@ public class Movement_Hero : MonoBehaviour
                 }
                 else
                 {
+                    CurrentGravity = 1;
                     PerformDistance = Mathf.RoundToInt(Mathf.Abs(RayCheckStartPoints[i].y - RayCastHit.point.y));
                     transform.Translate(0, -PerformDistance, 0);
                     Grounded = true;
