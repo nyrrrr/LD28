@@ -1687,6 +1687,8 @@ MonoBehaviour:
   - {fileID: 1409920069}
   - {fileID: 1035383324}
   - {fileID: 16551626}
+  currentGround: 0
+  nextGround: 0
 --- !u!4 &932961233
 Transform:
   m_ObjectHideFlags: 0
