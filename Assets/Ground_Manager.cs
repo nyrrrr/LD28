@@ -22,14 +22,14 @@ public class Ground_Manager : MonoBehaviour
 
 	public GameObject[] MyGrounds;
 
-    private int minimumSpaceBetweenGrounds = 50;
+    private int minimumSpaceBetweenGrounds = 55;
 
     public static int MinimumSpaceBetweenGrounds
     {
         get { return _selfRef.minimumSpaceBetweenGrounds; }
         set { _selfRef.minimumSpaceBetweenGrounds = value; }
     }
-	private int maximumSpaceBetweenGrounds = 70;
+	private int maximumSpaceBetweenGrounds = 80;
     public static int MaximumSpaceBetweenGrounds
     {
         get { return _selfRef.maximumSpaceBetweenGrounds; }

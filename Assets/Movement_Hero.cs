@@ -26,6 +26,8 @@ public class Movement_Hero : MonoBehaviour
 	private GameObject heroModel;
 	private int animationSpeed = 3;
     public AudioClip jumpSound, deathSound;
+
+    int updateCounter = 0;
 	// Use this for initialization
     void Start()
     {
@@ -34,6 +36,8 @@ public class Movement_Hero : MonoBehaviour
 		MyGroundManager.OrderNextGround();
 		heroModel = GameObject.Find("Hero").transform.FindChild("Model").gameObject;
 		heroModel.renderer.material.mainTextureScale = new Vector2(1f / animationTilesAmount, 1);
+
+        Time.timeScale = 1;
     }
     void Update()
     {
@@ -50,6 +54,7 @@ public class Movement_Hero : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        updateCounter++;
         if (GameManager.Alive)
         {
 
@@ -71,19 +76,24 @@ public class Movement_Hero : MonoBehaviour
                 {
                     stepCounter = 0;
                     GameManager.Highscore += 0.5;
-                    if (GameManager.Highscore % 100 == 0)
-                    {
-                        Ground_Manager.MinimumSpaceBetweenGrounds++;
-                        Ground_Manager.MaximumSpaceBetweenGrounds++;
-                        MovementSpeed++;
-                        
-                    }
                 }
             }
             PerformGravity();
 			//RunAnimation
 			if (Grounded)
 			{
+
+                if (updateCounter > 250)
+                {
+                    Debug.Log(updateCounter);
+                    updateCounter = 0;
+                    Time.timeScale += 0.1f;
+                }
+                //float oldMovementSpeed = MovementSpeed;
+                //Ground_Manager.MinimumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MinimumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
+                //Ground_Manager.MaximumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MaximumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
+                //MovementSpeed++;
+
 				if (currentAnimationFrame % animationSpeed == 0)
 				{
 					heroModel.renderer.material.mainTextureOffset = new Vector2(1f / animationTilesAmount * currentAnimationFrame / animationSpeed, 0);
@@ -115,8 +125,8 @@ public class Movement_Hero : MonoBehaviour
     {
         RayCheckStartPoints = new Vector2[2];
         // edit nyrrrr: this might be wrong (TODO ?)
-        RayCheckStartPoints[0] = new Vector2(transform.position.x+1, transform.position.y);
-        RayCheckStartPoints[1] = new Vector2(transform.position.x + ((BoxCollider2D)transform.collider2D).size.x+1, transform.position.y);
+        RayCheckStartPoints[0] = new Vector2(transform.position.x-3, transform.position.y);
+        RayCheckStartPoints[1] = new Vector2(transform.position.x-3 + ((BoxCollider2D)transform.collider2D).size.x, transform.position.y);
         int PerformDistance = Mathf.Abs(CurrentGravity);
         for (int i = 0; i < RayCheckStartPoints.Length; i++)
         {
