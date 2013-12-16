@@ -77,12 +77,11 @@ public class Movement_Hero : MonoBehaviour
 				{
 					heroModel.renderer.material.mainTextureOffset = new Vector2(1f / animationTilesAmount * currentAnimationFrame / animationSpeed, 0);
 				}
-
+                currentAnimationFrame++;
 				if (currentAnimationFrame == 6 * animationSpeed)
 				{
 					currentAnimationFrame = 0;
 				}
-				currentAnimationFrame++;
 			}
         }
     }

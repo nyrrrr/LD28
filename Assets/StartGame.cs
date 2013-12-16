@@ -8,7 +8,6 @@ public class StartGame : MonoBehaviour
 {
     private GUIStyle centeredStyle;
     public Font font;
-    private Texture2D _tex2d;
 
     // Use this for initialization
     void Start()
@@ -27,14 +26,6 @@ public class StartGame : MonoBehaviour
 
     void OnGUI()
     {
-
-        _tex2d = new Texture2D(1, 1);
-        //GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height)
-        //                    , _tex2d
-        //                    , ScaleMode.StretchToFill
-        //                    , true
-        //                    , 1.0F);
-
         centeredStyle = GUI.skin.GetStyle("Label");
         centeredStyle.alignment = TextAnchor.UpperCenter;
         centeredStyle.font = font;
