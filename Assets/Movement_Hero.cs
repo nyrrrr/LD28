@@ -18,91 +18,112 @@ public class Movement_Hero : MonoBehaviour
 
     private long stepCounter = 0; // for highscore
 
-    private Ground_Manager MyGroundManager;
+    private GroundManager MyGroundManager;
     private GameObject CurrentGround;
 
-	private int animationTilesAmount = 6;
-	private int currentAnimationFrame = 0;
-	private GameObject heroModel;
-	private int animationSpeed = 3;
+    private int animationTilesAmount = 6;
+    private int currentAnimationFrame = 0;
+    private GameObject heroModel;
+    private int animationSpeed = 3;
     public AudioClip jumpSound, deathSound;
 
     int updateCounter = 0;
-	// Use this for initialization
+    // Use this for initialization
     void Start()
     {
-        MyGroundManager = GameObject.Find("GameManager").GetComponent<Ground_Manager>();
-		MyGroundManager.OrderNextGround();
-		MyGroundManager.OrderNextGround();
-		heroModel = GameObject.Find("Hero").transform.FindChild("Model").gameObject;
-		heroModel.renderer.material.mainTextureScale = new Vector2(1f / animationTilesAmount, 1);
+        MyGroundManager = GameObject.Find("GroundManager").GetComponent<GroundManager>();
+        MyGroundManager.OrderNextGround();
+        MyGroundManager.OrderNextGround();
+        heroModel = GameObject.Find("Hero").transform.FindChild("Model").gameObject;
+        heroModel.renderer.material.mainTextureScale = new Vector2(1f / animationTilesAmount, 1);
 
         Time.timeScale = 1;
     }
     void Update()
     {
-        keyPressed = Input.GetKeyDown(KeyCode.Space);
-        if (DaOneIsPerformed && GameManager.Alive)
+        if (DontDestroyOnLoadHelper.GameStarted)
         {
-            if (keyPressed)
+            keyPressed = Input.GetKeyDown(KeyCode.Space);
+            if (DaOneIsPerformed && GameManager.Alive)
             {
-                //Debug.Log("UPDATE: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
-                DaOneIsPerformed = false;
+                if (keyPressed)
+                {
+                    //Debug.Log("UPDATE: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+                    DaOneIsPerformed = false;
+                }
             }
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        updateCounter++;
-        if (GameManager.Alive)
+        if (DontDestroyOnLoadHelper.GameStarted)
         {
-
-            if (!DaOneIsPerformed)
+            updateCounter++;
+            if (GameManager.Alive)
             {
-                //Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+
+                if (!DaOneIsPerformed)
+                {
+                    //Debug.Log("JUMPED: PosX: " + (transform.position.x + 8) + " | " + "Grounded: " + Grounded);
+                    if (Grounded)
+                    {
+                        StartCoroutine(PerformJump());
+                    }
+                    DaOneIsPerformed = true;
+                }
+                for (int i = 0; i < MovementSpeed; i++)
+                {
+                    transform.Translate(1, 0, 0);
+
+                    if (stepCounter < 12) stepCounter++;
+                    else
+                    {
+                        stepCounter = 0;
+                        GameManager.Highscore += 0.5;
+                        if (GameManager.Highscore == 100)
+                        {
+                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5262);
+                            GJAPI.Trophies.Add(5262);
+                        }
+                        if (GameManager.Highscore == 300)
+                        {
+                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5263);
+                            GJAPI.Trophies.Add(5263);
+                        }
+                        if (GameManager.Highscore == 500)
+                        {
+                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5260);
+                            GJAPI.Trophies.Add(5260);
+                        }
+                    }
+                }
+                PerformGravity();
+                //RunAnimation
                 if (Grounded)
                 {
-                    StartCoroutine(PerformJump());
+
+                    if (updateCounter > 250)
+                    {
+                        updateCounter = 0;
+                        Time.timeScale += 0.1f;
+                    }
+                    //float oldMovementSpeed = MovementSpeed;
+                    //Ground_Manager.MinimumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MinimumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
+                    //Ground_Manager.MaximumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MaximumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
+                    //MovementSpeed++;
+
+                    if (currentAnimationFrame % animationSpeed == 0)
+                    {
+                        heroModel.renderer.material.mainTextureOffset = new Vector2(1f / animationTilesAmount * currentAnimationFrame / animationSpeed, 0);
+                    }
+                    currentAnimationFrame++;
+                    if (currentAnimationFrame == 6 * animationSpeed)
+                    {
+                        currentAnimationFrame = 0;
+                    }
                 }
-                DaOneIsPerformed = true;
             }
-            for (int i = 0; i < MovementSpeed; i++)
-            {
-                transform.Translate(1, 0, 0);
-
-                if (stepCounter < 12) stepCounter++;
-                else
-                {
-                    stepCounter = 0;
-                    GameManager.Highscore += 0.5;
-                }
-            }
-            PerformGravity();
-			//RunAnimation
-			if (Grounded)
-			{
-
-                if (updateCounter > 250)
-                {
-                    updateCounter = 0;
-                    Time.timeScale += 0.1f;
-                }
-                //float oldMovementSpeed = MovementSpeed;
-                //Ground_Manager.MinimumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MinimumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
-                //Ground_Manager.MaximumSpaceBetweenGrounds = (int)Mathf.Ceil(Ground_Manager.MaximumSpaceBetweenGrounds * ((oldMovementSpeed + 1) / oldMovementSpeed));
-                //MovementSpeed++;
-
-				if (currentAnimationFrame % animationSpeed == 0)
-				{
-					heroModel.renderer.material.mainTextureOffset = new Vector2(1f / animationTilesAmount * currentAnimationFrame / animationSpeed, 0);
-				}
-                currentAnimationFrame++;
-				if (currentAnimationFrame == 6 * animationSpeed)
-				{
-					currentAnimationFrame = 0;
-				}
-			}
         }
     }
 
@@ -124,8 +145,8 @@ public class Movement_Hero : MonoBehaviour
     {
         RayCheckStartPoints = new Vector2[2];
         // edit nyrrrr: this might be wrong (TODO ?)
-        RayCheckStartPoints[0] = new Vector2(transform.position.x-3, transform.position.y);
-        RayCheckStartPoints[1] = new Vector2(transform.position.x+1 + ((BoxCollider2D)transform.collider2D).size.x, transform.position.y);
+        RayCheckStartPoints[0] = new Vector2(transform.position.x - 3, transform.position.y);
+        RayCheckStartPoints[1] = new Vector2(transform.position.x + 1 + ((BoxCollider2D)transform.collider2D).size.x, transform.position.y);
         int PerformDistance = Mathf.Abs(CurrentGravity);
         for (int i = 0; i < RayCheckStartPoints.Length; i++)
         {
@@ -159,25 +180,33 @@ public class Movement_Hero : MonoBehaviour
         transform.Translate(0, -PerformDistance, 0);
         CurrentGravity += GravitySpeed;
     }
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        //Debug.Log("Triggered!: " + Grounded);
-        if (col.gameObject.layer == 31)
-        {
-            if (CurrentGround != col.gameObject)
-            {
-                MyGroundManager.OrderNextGround();
-                CurrentGround = col.gameObject;
-            }
-            if (!Grounded)
-            {
-                Die();
-            }
-        }
-    }
     void Die()
     {
         audio.PlayOneShot(deathSound);
         GameManager.Alive = false;
     }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (DontDestroyOnLoadHelper.GameStarted)
+        {
+            //Debug.Log("Triggered!: " + Grounded);
+            if (col.gameObject.layer == 31)
+            {
+                if (CurrentGround != col.gameObject)
+                {
+                    MyGroundManager.OrderNextGround();
+                    CurrentGround = col.gameObject;
+                }
+                if (!Grounded)
+                {
+                    Die();
+                }
+            }
+        }
+    }
+
+    void OnApplicationQuit() {
+        
+    }
+
 }

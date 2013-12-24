@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-/// <summary>
-/// 
-/// </summary>
+
 public class GameManager : MonoBehaviour
 {
 
@@ -15,11 +13,18 @@ public class GameManager : MonoBehaviour
 
     GUIStyle centeredStyle;
     public Font font;
+    public bool _started = false;
+    private bool once = false;
 
     // Use this for initialization
     void Awake()
     {
         _selfRef = this;
+    }
+
+    void Start() {
+        GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5259);
+        GJAPI.Trophies.Add(5259);
     }
 
     // Update is called once per frame
@@ -32,7 +37,16 @@ public class GameManager : MonoBehaviour
             StartCoroutine("_HandleRestart");
             if (Input.GetKeyDown(KeyCode.Space) && enableRestart)
             {
-                Application.LoadLevel(1);
+                if (!once)
+                {
+                    GJAPI.Scores.Add(GameManager.Highscore + "m", (uint)(GameManager.Highscore * 10));
+                    GJAPIHelper.Scores.ShowLeaderboards();
+                    once = true;
+                }
+                else {
+                    GJAPIHelper.Scores.DismissLeaderboards();
+                    Application.LoadLevel(1);
+                }
             }
         }
     }
@@ -91,6 +105,11 @@ public class GameManager : MonoBehaviour
     {
         get { return _selfRef.highscore; }
         set { _selfRef.highscore = value; }
+    }
+    public static bool Started
+    {
+        get { return _selfRef._started; }
+        set { _selfRef._started = value; }
     }
     #endregion
 }

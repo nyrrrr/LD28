@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Ground_Manager : MonoBehaviour
+public class GroundManager : MonoBehaviour
 {
 
-    private static Ground_Manager _selfRef;
+    private static GroundManager _selfRef;
     void Awake()
     {
         _selfRef = this;
