@@ -8,11 +8,12 @@ public class StartGame : MonoBehaviour
 {
     private GUIStyle centeredStyle;
     public Font font;
+    public GameJoltAPIManager api;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-
+        api = GameObject.Find("_GameJoltAPIManager").GetComponent<GameJoltAPIManager>();
     }
 
     // Update is called once per frame
@@ -20,14 +21,14 @@ public class StartGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DontDestroyOnLoadHelper.GameStarted = true;
+            api.gameStarted = true;
             Application.LoadLevel(1);
         }
     }
 
     void OnGUI()
     {
-        if (!DontDestroyOnLoadHelper.GameStarted)
+        if (!api.gameStarted)
         {
             centeredStyle = GUI.skin.GetStyle("Label");
             centeredStyle.alignment = TextAnchor.UpperCenter;

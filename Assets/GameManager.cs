@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         api.AddTrophy(5259);
+        api.IncreaseReplay();
     }
 
     // Update is called once per frame
@@ -50,14 +51,11 @@ public class GameManager : MonoBehaviour
                 if (!once)
                 {
                     showHighscore = true;
-                    api.GenerateHighscores();
-                    //GJAPI.Scores.Add(GameManager.Highscore + "m", (uint)(GameManager.Highscore * 10));
-                    //GJAPIHelper.Scores.ShowLeaderboards();
+                    api.GenerateHighscores(highscore);
                     once = true;
                 }
                 else if (!api.BlockUserInput)
                 {
-                    //GJAPIHelper.Scores.DismissLeaderboards();
                     Application.LoadLevel(1);
                 }
             }
@@ -109,6 +107,7 @@ public class GameManager : MonoBehaviour
 
             GUI.Label(new Rect((Screen.width / 2) - 200, 100, 400, 80), "<color=red><size=35>Highscore</size></color>", centeredStyle);
             GJScore sc;
+
             for (int i = 0; i < api.Scores.Length; i++)
             {
                 sc = api.Scores[i];

@@ -41,7 +41,7 @@ public class Movement_Hero : MonoBehaviour
     }
     void Update()
     {
-        if (DontDestroyOnLoadHelper.GameStarted)
+        if (GameManager.Api.gameStarted)
         {
             keyPressed = Input.GetKeyDown(KeyCode.Space);
             if (DaOneIsPerformed && GameManager.Alive)
@@ -57,7 +57,7 @@ public class Movement_Hero : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (DontDestroyOnLoadHelper.GameStarted)
+        if (GameManager.Api.gameStarted)
         {
             updateCounter++;
             if (GameManager.Alive)
@@ -186,7 +186,7 @@ public class Movement_Hero : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (DontDestroyOnLoadHelper.GameStarted)
+        if (GameManager.Api.gameStarted)
         {
             //Debug.Log("Triggered!: " + Grounded);
             if (col.gameObject.layer == 31)

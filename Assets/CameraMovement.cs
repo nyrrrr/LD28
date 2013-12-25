@@ -23,7 +23,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (DontDestroyOnLoadHelper.GameStarted)
+        if (GameManager.Api.gameStarted)
         {
             newPos = GroundManager.MyGroundsProp[GroundManager.NextGround].transform.position;
             transform.position = new Vector3(hero.position.x + HERO_OFFSET_X, transform.position.y, transform.position.z);

@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   font: {fileID: 12800000, guid: 6a3600ae1b23fb54785335174ce823fe, type: 3}
+  api: {fileID: 0}
 --- !u!82 &698818879
 AudioSource:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   privateKey: 950cc59a8bd8314eacc06beebd64c0b5
   userName: 
   userToken: 
+  gameStarted: 0
 --- !u!4 &2091049456
 Transform:
   m_ObjectHideFlags: 0
