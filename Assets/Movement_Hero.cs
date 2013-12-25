@@ -83,18 +83,15 @@ public class Movement_Hero : MonoBehaviour
                         GameManager.Highscore += 0.5;
                         if (GameManager.Highscore == 100)
                         {
-                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5262);
-                            GJAPI.Trophies.Add(5262);
+                            GameManager.Api.AddTrophy(5262);   
                         }
                         if (GameManager.Highscore == 300)
                         {
-                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5263);
-                            GJAPI.Trophies.Add(5263);
+                            GameManager.Api.AddTrophy(5263);
                         }
                         if (GameManager.Highscore == 500)
                         {
-                            GJAPIHelper.Trophies.ShowTrophyUnlockNotification(5260);
-                            GJAPI.Trophies.Add(5260);
+                            GameManager.Api.AddTrophy(5260);
                         }
                     }
                 }
@@ -127,7 +124,9 @@ public class Movement_Hero : MonoBehaviour
         }
     }
 
+    
 
+    
     IEnumerator PerformJump()
     {
         audio.PlayOneShot(jumpSound);
