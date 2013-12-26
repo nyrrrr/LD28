@@ -4,7 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
 
-    public bool alive = true, showYourScore = false, enableRestart = false;
+    public bool alive = true, showYourScore = false, enableRestart = false, _started = false, once = false;
 
     public double highscore = 0f;
 
@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
 
     GUIStyle centeredStyle;
     public Font font;
-    public bool _started = false;
-    private bool once = false;
     private bool showHighscore;
 
     private GameJoltAPIManager api;
@@ -50,14 +48,15 @@ public class GameManager : MonoBehaviour
             {
                 if (!once)
                 {
-                    showHighscore = true;
+                    showHighscore = true;        
                     api.GenerateHighscores(highscore);
+                    showYourScore = false;
                     once = true;
                 }
                 else if (!api.BlockUserInput)
-                {
-                    showHighscore = false;
+                {          
                     Application.LoadLevel(1);
+                    showHighscore = false;
                 }
             }
         }
