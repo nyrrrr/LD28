@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (!api.BlockUserInput)
                 {
+                    showHighscore = false;
                     Application.LoadLevel(1);
                 }
             }
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
 
         centeredStyle.fontSize = 12;
 
-        if (showYourScore && !showHighscore)
+        if (showYourScore && !showHighscore && !alive)
         {
             centeredStyle.alignment = TextAnchor.UpperCenter;
 
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
             GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 200, 800, 500), "<color=white><size=15>Press SPACE to view Highscore</size></color>", centeredStyle);
 
         }
-        else if (showHighscore)
+        else if (showHighscore && !alive)
         {
             centeredStyle.alignment = TextAnchor.UpperCenter;
 
@@ -112,9 +113,9 @@ public class GameManager : MonoBehaviour
             {
                 sc = api.Scores[i];
                 centeredStyle.alignment = TextAnchor.UpperLeft;
-                GUI.Label(new Rect((Screen.width / 2) - 200, 230 + (i * 25), 200, 40), "<color=" + (GameJoltAPIManager._selfRef.userName == sc.Name ? "red" : "white" ) + "><size=15>" + sc.Name + "</size></color>", centeredStyle);
+                GUI.Label(new Rect((Screen.width / 2) - 200, 230 + (i * 25), 200, 40), "<color=" + (GameJoltAPIManager._selfRef.userName.Equals(sc.Name) ? "red" : "white" ) + "><size=15>" + sc.Name + "</size></color>", centeredStyle);
                 centeredStyle.alignment = TextAnchor.UpperRight;
-                GUI.Label(new Rect((Screen.width / 2) + 0, 230 + (i * 25), 200, 40), "<color=white><size=15>" + (sc.Score.IndexOf(".") == -1 ? sc.Score.Insert(sc.Score.IndexOf("m"), ".0") : sc.Score) + "</size></color>", centeredStyle);
+                GUI.Label(new Rect((Screen.width / 2) + 0, 230 + (i * 25), 200, 40), "<color=" + (GameJoltAPIManager._selfRef.userName.Equals(sc.Name) ? "red" : "white") + "><size=15>" + (sc.Score.IndexOf(".") == -1 ? sc.Score.Insert(sc.Score.IndexOf("m"), ".0") : sc.Score) + "</size></color>", centeredStyle);
             }
             centeredStyle.alignment = TextAnchor.UpperCenter;
             GUI.Label(new Rect((Screen.width / 2) - 400, Screen.height / 2 + 200, 800, 500), "<color=white><size=15>Press SPACE to play again</size></color>", centeredStyle);
