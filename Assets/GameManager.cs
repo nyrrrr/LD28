@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             {
                 sc = api.Scores[i];
                 centeredStyle.alignment = TextAnchor.UpperLeft;
-                GUI.Label(new Rect((Screen.width / 2) - 200, 230 + (i * 25), 200, 40), "<color=white><size=15>" + sc.Name + "</size></color>", centeredStyle);
+                GUI.Label(new Rect((Screen.width / 2) - 200, 230 + (i * 25), 200, 40), "<color=" + (GameJoltAPIManager._selfRef.userName == sc.Name ? "red" : "white" ) + "><size=15>" + sc.Name + "</size></color>", centeredStyle);
                 centeredStyle.alignment = TextAnchor.UpperRight;
                 GUI.Label(new Rect((Screen.width / 2) + 0, 230 + (i * 25), 200, 40), "<color=white><size=15>" + (sc.Score.IndexOf(".") == -1 ? sc.Score.Insert(sc.Score.IndexOf("m"), ".0") : sc.Score) + "</size></color>", centeredStyle);
             }
